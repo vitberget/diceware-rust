@@ -35,7 +35,7 @@ fn read_words(filename: String, rolls: Vec<String>) -> HashMap<String, String> {
     let mut word_map = HashMap::new();
 
     for s in rolls.iter() {
-        word_map.insert(s.clone(), String::from(""));
+        word_map.insert(s.clone(), String::new());
     }
 
     let mut file_contents = String::new();
@@ -44,7 +44,7 @@ fn read_words(filename: String, rolls: Vec<String>) -> HashMap<String, String> {
         "en" => DW_EN,
         _ => {
             let mut file = File::open(filename).unwrap();
-            file.read_to_string(&mut file_contents);
+            file.read_to_string(&mut file_contents).unwrap();
             file_contents.as_str()
         }
     };
@@ -71,7 +71,7 @@ fn dice_it(word_count: u8, filename: String) {
 
     let r1 = rand::thread_rng().gen_range(1, cmp::min(7, word_count + 1));
     let r1_word = rolls_words[(r1 - 1) as usize];
-    let (r1_word_size, r1_word_size_upper) = r1_word.chars().size_hint();
+    let (_, r1_word_size_upper) = r1_word.chars().size_hint();
     let r2 = (rand::thread_rng().gen_range(1, cmp::min(7, r1_word_size_upper.unwrap() + 1))) as u8;
     let r3 = dice();
     let r4 = dice();
@@ -100,7 +100,7 @@ fn dice_it(word_count: u8, filename: String) {
     let mut i = 1;
     for w in rolls_words {
         if first {
-            print!("Password option 2: ");
+            print!("Password option 2: ")
         } else {
             print!("_");
         }
@@ -117,22 +117,9 @@ fn dice_it(word_count: u8, filename: String) {
     println!();
 }
 
-fn main() {
-    let n: u8 = env::args().nth(1).unwrap_or("5".to_string()).parse().expect("could not convert argument to u8");
-    let f = env::args().nth(2).unwrap_or("en".to_string());
-
-    dice_it(n, f);
-}
-
-
-fn get_replace_char(third: u8, fourth: u8) -> char {
-    let i = ((fourth - 1) * 6 + (third - 1)) as usize;
-    let c = REPLACE_CHARS.chars().nth(i).unwrap();
-    return c;
-}
 
 fn replace_char(rolls_words: Vec<&String>, r1: u8, r2: u8, r3: u8, r4: u8) -> String {
-    let rc = get_replace_char(r3, r4);
+    let rc = REPLACE_CHARS.chars().nth(((r4 - 1) * 6 + (r3 - 1)) as usize).unwrap();
     let w = rolls_words[(r1 - 1) as usize];
 
     let mut w2 = String::new();
@@ -148,6 +135,14 @@ fn replace_char(rolls_words: Vec<&String>, r1: u8, r2: u8, r3: u8, r4: u8) -> St
 
     return w2;
 }
+
+fn main() {
+    let n: u8 = env::args().nth(1).unwrap_or("5".to_string()).parse().expect("could not convert argument to u8");
+    let f = env::args().nth(2).unwrap_or("en".to_string());
+
+    dice_it(n, f);
+}
+
 
 #[cfg(test)]
 mod tests {
