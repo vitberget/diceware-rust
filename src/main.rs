@@ -6,6 +6,9 @@ use std::env;
 use std::fs::File;
 use std::io::{BufReader, BufRead};
 
+static DW_EN: &'static str = include_str!("../resources/diceware-en.txt");
+static DW_SV: &'static str = include_str!("../resources/diceware-sv.txt");
+
 fn dice() -> u8 {
     return rand::thread_rng().gen_range(1, 7);
 }
@@ -33,10 +36,9 @@ fn read_words(filename: String, rolls: Vec<String>) -> HashMap<String, String> {
         word_map.insert(s.clone(), String::from(""));
     }
 
-    let file = File::open(filename).unwrap();
-    for line in BufReader::new(file).lines() {
-        let line_unwrapped = line.unwrap();
-        let split: Vec<_> = line_unwrapped.split_whitespace().collect();
+    let source = if filename == "en" { DW_EN } else { DW_SV };
+    for line in source.to_string().lines() {
+        let split: Vec<_> = line.split_whitespace().collect();
 
         let key = String::from(*split.get(0).unwrap());
 
@@ -76,7 +78,7 @@ fn dice_it(word_count: u8, filename: String) {
 
 fn main() {
     let n: u8 = env::args().nth(1).unwrap_or("5".to_string()).parse().expect("could not convert argument to u8");
-    let f = env::args().nth(2).unwrap_or("resources/diceware-en.txt".to_string());
+    let f = env::args().nth(2).unwrap_or("en".to_string());
 
     dice_it(n, f);
 }
