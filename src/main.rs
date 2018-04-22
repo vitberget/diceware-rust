@@ -4,7 +4,7 @@ use rand::Rng;
 use std::collections::HashMap;
 use std::env;
 use std::fs::File;
-use std::io::{BufReader, BufRead};
+use std::io::Read;
 
 static DW_EN: &'static str = include_str!("../resources/diceware-en.txt");
 static DW_SV: &'static str = include_str!("../resources/diceware-sv.txt");
@@ -36,7 +36,17 @@ fn read_words(filename: String, rolls: Vec<String>) -> HashMap<String, String> {
         word_map.insert(s.clone(), String::from(""));
     }
 
-    let source = if filename == "en" { DW_EN } else { DW_SV };
+    let mut file_contents = String::new();
+    let source = match filename.as_str() {
+        "sv" => DW_SV,
+        "en" => DW_EN,
+        _ => {
+            let mut file = File::open(filename).unwrap();
+            file.read_to_string(&mut file_contents);
+            file_contents.as_str()
+        }
+    };
+
     for line in source.to_string().lines() {
         let split: Vec<_> = line.split_whitespace().collect();
 
