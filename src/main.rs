@@ -94,7 +94,7 @@ fn dice_it(word_count: u8, filename: String) {
         }
         first = false;
     }
-    println!(" ({} bits of entropy)", (word_count as f32) * 12.9);
+    println!(" ({:.1} bits of entropy)", (word_count as f32) * 12.9);
 
     first = true;
     let mut i = 1;
@@ -114,7 +114,7 @@ fn dice_it(word_count: u8, filename: String) {
         first = false;
         i = i + 1;
     }
-    println!(" ({} bits of entropy)", (word_count as f32) * 12.9 + 10.0);
+    println!(" ({:.1} bits of entropy)", (word_count as f32) * 12.9 + 10.0);
 
     let c = rolls_words.iter()
         .map(|w| w.len())
