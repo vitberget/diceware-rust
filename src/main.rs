@@ -98,7 +98,7 @@ fn dice_it(word_count: u8, filename: String) {
 
     first = true;
     let mut i = 1;
-    for w in rolls_words {
+    for w in rolls_words.clone() {
         if first {
             print!("Password option 2: ")
         } else {
@@ -115,6 +115,13 @@ fn dice_it(word_count: u8, filename: String) {
         i = i + 1;
     }
     println!(" ({} bits of entropy)", (word_count as f32) * 12.9 + 10.0);
+
+    let c = rolls_words.iter()
+        .map(|w| w.len())
+        .fold(0, |a, s| a+s);
+    if c < 17 {
+        println!("!!! Word characters {} less than 17 !!!", c);
+    }
 }
 
 
