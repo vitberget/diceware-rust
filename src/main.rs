@@ -94,7 +94,7 @@ fn dice_it(word_count: u8, filename: String) {
         }
         first = false;
     }
-    println!();
+    println!(" ({} bits of entropy)", (word_count as f32) * 12.9);
 
     first = true;
     let mut i = 1;
@@ -114,7 +114,7 @@ fn dice_it(word_count: u8, filename: String) {
         first = false;
         i = i + 1;
     }
-    println!();
+    println!(" ({} bits of entropy)", (word_count as f32) * 12.9 + 10.0);
 }
 
 
