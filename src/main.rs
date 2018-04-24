@@ -8,11 +8,12 @@ use std::fs::File;
 use std::io::Read;
 
 use dice::{dice, dice_strings};
+use replace_char::{replace_char};
 mod dice;
+mod replace_char;
 
 static DW_EN: &'static str = include_str!("../resources/diceware-en.txt");
 static DW_SV: &'static str = include_str!("../resources/diceware-sv.txt");
-static REPLACE_CHARS: &'static str = "~!#$%^&*()-=+[]\\{}:;\"'<>?/0123456789";
 
 fn read_words(filename: String, rolls: Vec<String>) -> HashMap<String, String> {
     let mut word_map = HashMap::new();
@@ -107,54 +108,9 @@ fn dice_it(word_count: u8, filename: String) {
     }
 }
 
-
-fn replace_char(rolls_words: Vec<&String>, r1: u8, r2: u8, r3: u8, r4: u8) -> String {
-    let rc = REPLACE_CHARS.chars().nth(((r4 - 1) * 6 + (r3 - 1)) as usize).unwrap();
-    let w = rolls_words[(r1 - 1) as usize];
-
-    let mut w2 = String::new();
-    let mut i = 1;
-    for c in w.chars() {
-        if i == r2 {
-            w2.push(rc);
-        } else {
-            w2.push(c);
-        }
-        i = i + 1;
-    }
-
-    return w2;
-}
-
 fn main() {
     let n: u8 = env::args().nth(1).unwrap_or("5".to_string()).parse().expect("could not convert argument to u8");
     let f = env::args().nth(2).unwrap_or("en".to_string());
 
     dice_it(n, f);
-}
-
-
-#[cfg(test)]
-mod tests {
-    use get_replace_char;
-
-    #[test]
-    fn replace_char1() {
-        assert_eq!(get_replace_char(1, 1), '~');
-    }
-
-    #[test]
-    fn replace_char2() {
-        assert_eq!(get_replace_char(6, 3), '}');
-    }
-
-    #[test]
-    fn replace_char3() {
-        assert_eq!(get_replace_char(2, 5), '/');
-    }
-
-    #[test]
-    fn replace_char4() {
-        assert_eq!(get_replace_char(5, 6), '8');
-    }
 }
