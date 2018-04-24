@@ -9,8 +9,8 @@ use std::io::Read;
 use self::dice::{dice, dice_strings};
 use self::replace_char::replace_char;
 
-pub mod dice;
-pub mod replace_char;
+mod dice;
+mod replace_char;
 
 static DW_EN: &'static str = include_str!("../../resources/diceware-en.txt");
 static DW_SV: &'static str = include_str!("../../resources/diceware-sv.txt");
@@ -77,7 +77,7 @@ pub fn dice_it(word_count: u8, filename: &str, verbose: bool) {
             if verbose {
                 print!("Password option 1: ");
             }
-            print!("{}",w);
+            print!("{}", w);
         } else {
             print!("_{}", w);
         }
