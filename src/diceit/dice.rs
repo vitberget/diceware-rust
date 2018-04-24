@@ -1,6 +1,6 @@
 extern crate rand;
 
-use rand::Rng;
+use self::rand::Rng;
 
 pub fn dice() -> u8 {
     return rand::thread_rng().gen_range(1, 7);
