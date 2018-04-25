@@ -24,14 +24,20 @@ fn main() {
             .help("en, sv or filename")
             .default_value("en")
             .takes_value(true))
+        .arg(Arg::with_name("replace")
+            .short("r")
+            .long("replace")
+            .help("Replace one random character"))
         .arg(Arg::with_name("verbose")
             .short("v")
             .long("verbose")
             .help("Verbose response, showing dice rolls and entropy"))
         .get_matches();
+
     let wordcount: u8 = matches.value_of("words").unwrap_or("5").parse().expect("Not a number");
     let list = matches.value_of("list").unwrap_or("en");
-    let verbose  = matches.is_present("verbose");
+    let verbose = matches.is_present("verbose");
+    let replace = matches.is_present("replace");
 
-    diceit::dice_it(wordcount, list, verbose);
+    diceit::dice_it(wordcount, list, verbose, replace);
 }

@@ -47,32 +47,18 @@ fn read_words(filename: &str, rolls: Vec<String>) -> HashMap<String, String> {
     return word_map;
 }
 
-pub fn dice_it(word_count: u8, filename: &str, verbose: bool) {
-    let rolls = dice_strings(word_count);
-
-    let words = read_words(filename, rolls.clone());
-    let rolls_words: Vec<&String> = rolls.iter().map(|r| words.get(r).unwrap()).collect();
-
-    let r1 = rand::thread_rng().gen_range(1, cmp::min(7, word_count + 1));
-    let r1_word = rolls_words[(r1 - 1) as usize];
-    let (_, r1_word_size_upper) = r1_word.chars().size_hint();
-    let r2 = (rand::thread_rng().gen_range(1, cmp::min(7, r1_word_size_upper.unwrap() + 1))) as u8;
-    let r3 = dice();
-    let r4 = dice();
-
-    let pw2 = replace_char(rolls_words.clone(), r1, r2, r3, r4);
-
-    if verbose {
-        print!("Password rolls   :");
-        for s in rolls.iter() {
-            print!(" {}", s);
-        }
-        println!();
-        println!("Replace rolls    : {}{}{}{}", r1, r2, r3, r4);
+fn print_rolls(rolls: Vec<String>, r1: u8, r2: u8, r3: u8, r4: u8) {
+    print!("Password rolls   :");
+    for s in rolls.iter() {
+        print!(" {}", s);
     }
+    println!();
+    println!("Replace rolls    : {}{}{}{}", r1, r2, r3, r4);
+}
 
+fn print_option1(rolls_words: Vec<&String>, word_count: u8, verbose: bool) {
     let mut first = true;
-    for w in rolls_words.clone() {
+    for w in rolls_words {
         if first {
             if verbose {
                 print!("Password option 1: ");
@@ -87,8 +73,10 @@ pub fn dice_it(word_count: u8, filename: &str, verbose: bool) {
         print!(" ({:.1} bits of entropy)", (word_count as f32) * 12.9);
     }
     println!();
+}
 
-    first = true;
+fn print_option2(rolls_words: Vec<&String>, word_count: u8, verbose: bool, r1: u8, r2: u8, r3: u8, r4: u8) {
+    let mut first = true;
     let mut i = 1;
     for w in rolls_words.clone() {
         if first {
@@ -100,7 +88,7 @@ pub fn dice_it(word_count: u8, filename: &str, verbose: bool) {
         }
 
         if i == r1 {
-            print!("{}", pw2)
+            print!("{}", replace_char(w, r2, r3, r4));
         } else {
             print!("{}", w)
         }
@@ -112,11 +100,38 @@ pub fn dice_it(word_count: u8, filename: &str, verbose: bool) {
         print!(" ({:.1} bits of entropy)", (word_count as f32) * 12.9 + 10.0);
     }
     println!();
+}
 
+fn print_17_warning(rolls_words: Vec<&String>) {
     let c = rolls_words.iter()
         .map(|w| w.len())
         .fold(0, |a, s| a + s);
     if c < 17 {
         println!("!!! Word characters {} less than 17 !!!", c);
     }
+}
+
+pub fn dice_it(word_count: u8, filename: &str, verbose: bool, replace: bool) {
+    let rolls = dice_strings(word_count);
+
+    let words = read_words(filename, rolls.clone());
+    let rolls_words: Vec<&String> = rolls.iter().map(|r| words.get(r).unwrap()).collect();
+
+    let r1 = rand::thread_rng().gen_range(1, cmp::min(7, word_count + 1));
+    let r1_word = rolls_words[(r1 - 1) as usize];
+    let (_, r1_word_size_upper) = r1_word.chars().size_hint();
+    let r2 = (rand::thread_rng().gen_range(1, cmp::min(7, r1_word_size_upper.unwrap() + 1))) as u8;
+    let r3 = dice();
+    let r4 = dice();
+
+    if verbose {
+        print_rolls(rolls, r1, r2, r3, r4);
+    }
+    if verbose || !replace {
+        print_option1(rolls_words.clone(), word_count, verbose);
+    }
+    if verbose || replace {
+        print_option2(rolls_words.clone(), word_count, verbose, r1, r2, r3, r4);
+    }
+    print_17_warning(rolls_words);
 }
