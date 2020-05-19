@@ -6,7 +6,7 @@ mod diceit;
 
 fn main() {
     let matches = App::new("Diceware")
-        .version("0.2")
+        .version("0.3.0")
         .author("Kenneth Hedman <github@vitberget.se>")
         .about("Generates Diceware passwords")
         .arg(Arg::with_name("words")

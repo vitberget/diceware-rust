@@ -39,7 +39,7 @@ dependencies = [
 
 [[package]]
 name = "diceware-rust"
-version = "0.1.0"
+version = "0.3.0"
 dependencies = [
  "clap 2.31.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "rand 0.3.22 (registry+https://github.com/rust-lang/crates.io-index)",
