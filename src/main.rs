@@ -32,12 +32,18 @@ fn main() {
             .short("v")
             .long("verbose")
             .help("Verbose response, showing dice rolls and entropy"))
+        .arg(Arg::with_name("separator")
+            .short("s")
+            .long("separator")
+            .help("String separating words")
+            .default_value(" "))
         .get_matches();
 
     let wordcount: u8 = matches.value_of("words").unwrap_or("5").parse().expect("Not a number");
     let list = matches.value_of("list").unwrap_or("en");
     let verbose = matches.is_present("verbose");
     let replace = matches.is_present("replace");
+    let separator = matches.value_of("separator").unwrap();
 
-    diceit::dice_it(wordcount, list, verbose, replace);
+    diceit::dice_it(wordcount, list, verbose, replace, separator);
 }

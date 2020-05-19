@@ -56,7 +56,7 @@ fn print_rolls(rolls: Vec<String>, r1: u8, r2: u8, r3: u8, r4: u8) {
     println!("Replace rolls    : {}{}{}{}", r1, r2, r3, r4);
 }
 
-fn print_option1(rolls_words: Vec<&String>, word_count: u8, verbose: bool) {
+fn print_option1(rolls_words: Vec<&String>, word_count: u8, verbose: bool, separator: &str) {
     let mut first = true;
     for w in rolls_words {
         if first {
@@ -65,7 +65,7 @@ fn print_option1(rolls_words: Vec<&String>, word_count: u8, verbose: bool) {
             }
             print!("{}", w);
         } else {
-            print!("_{}", w);
+            print!("{}{}", separator, w);
         }
         first = false;
     }
@@ -75,7 +75,7 @@ fn print_option1(rolls_words: Vec<&String>, word_count: u8, verbose: bool) {
     println!();
 }
 
-fn print_option2(rolls_words: Vec<&String>, word_count: u8, verbose: bool, r1: u8, r2: u8, r3: u8, r4: u8) {
+fn print_option2(rolls_words: Vec<&String>, word_count: u8, verbose: bool, separator:&str, r1: u8, r2: u8, r3: u8, r4: u8) {
     let mut first = true;
     let mut i = 1;
     for w in rolls_words.clone() {
@@ -84,7 +84,7 @@ fn print_option2(rolls_words: Vec<&String>, word_count: u8, verbose: bool, r1: u
                 print!("Password option 2: ")
             }
         } else {
-            print!("_");
+            print!("{}", separator);
         }
 
         if i == r1 {
@@ -111,7 +111,7 @@ fn print_17_warning(rolls_words: Vec<&String>) {
     }
 }
 
-pub fn dice_it(word_count: u8, filename: &str, verbose: bool, replace: bool) {
+pub fn dice_it(word_count: u8, filename: &str, verbose: bool, replace: bool, separator: &str) {
     let rolls = dice_strings(word_count);
 
     let words = read_words(filename, rolls.clone());
@@ -128,10 +128,10 @@ pub fn dice_it(word_count: u8, filename: &str, verbose: bool, replace: bool) {
         print_rolls(rolls, r1, r2, r3, r4);
     }
     if verbose || !replace {
-        print_option1(rolls_words.clone(), word_count, verbose);
+        print_option1(rolls_words.clone(), word_count, verbose, separator);
     }
     if verbose || replace {
-        print_option2(rolls_words.clone(), word_count, verbose, r1, r2, r3, r4);
+        print_option2(rolls_words.clone(), word_count, verbose, separator, r1, r2, r3, r4);
     }
     print_17_warning(rolls_words);
 }
