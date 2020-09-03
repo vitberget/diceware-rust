@@ -10,7 +10,7 @@ Install Rust & Cargo, I use Rustup.
 
 ```bash
 # Build
-cargo build --relase
+cargo build --release
 
 # "Install" to your path
 cp target/release/diceware-rust /where/ever/bin/
