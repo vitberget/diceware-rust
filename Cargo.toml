@@ -4,5 +4,5 @@ version = "0.3.1"
 authors = ["Kenneth Hedman <github@vitberget.se>"]
 
 [dependencies]
-rand = "0.3.15"
+rand = "0.8.5"
 clap = "3.2.22"

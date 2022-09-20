@@ -1,6 +1,6 @@
 extern crate rand;
 
-use self::rand::Rng;
+use rand::Rng;
 use std::collections::HashMap;
 use std::cmp;
 use std::fs::File;
@@ -117,10 +117,10 @@ pub fn dice_it(word_count: u8, filename: &str, verbose: bool, replace: bool, sep
     let words = read_words(filename, rolls.clone());
     let rolls_words: Vec<&String> = rolls.iter().map(|r| words.get(r).unwrap()).collect();
 
-    let r1 = rand::thread_rng().gen_range(1, cmp::min(7, word_count + 1));
+    let r1 = rand::thread_rng().gen_range(1..=cmp::min(6, word_count)) as u8;
     let r1_word = rolls_words[(r1 - 1) as usize];
     let (_, r1_word_size_upper) = r1_word.chars().size_hint();
-    let r2 = (rand::thread_rng().gen_range(1, cmp::min(7, r1_word_size_upper.unwrap() + 1))) as u8;
+    let r2 = rand::thread_rng().gen_range(1..=cmp::min(6, r1_word_size_upper.unwrap())) as u8;
     let r3 = dice();
     let r4 = dice();
 

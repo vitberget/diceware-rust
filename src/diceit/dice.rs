@@ -1,9 +1,9 @@
 extern crate rand;
 
-use self::rand::Rng;
+use rand::Rng;
 
 pub fn dice() -> u8 {
-    return rand::thread_rng().gen_range(1, 7);
+    return rand::thread_rng().gen_range(1..=6) as u8
 }
 
 fn five_dice() -> String {
