@@ -6,8 +6,10 @@ use clap::{Arg, App};
 mod diceit;
 
 fn main() {
+    let version =  env!("CARGO_PKG_VERSION");
+
     let matches = App::new("Diceware")
-        .version("0.3.0")
+        .version(version)
         .author("Kenneth Hedman <github@vitberget.se>")
         .about("Generates Diceware passwords")
         .arg(Arg::with_name("words")
