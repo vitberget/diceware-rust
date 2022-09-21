@@ -58,16 +58,16 @@ fn print_rolls(rolls: Vec<String>, r1: u8, r2: u8, r3: u8, r4: u8) {
 
 fn print_option1(rolls_words: Vec<&String>, word_count: u8, verbose: bool, separator: &str) {
     let mut first = true;
-    for w in rolls_words {
+    for word in rolls_words {
         if first {
             if verbose {
                 print!("Password option 1: ");
             }
-            print!("{}", w);
+            print!("{}", word);
+            first = false;
         } else {
-            print!("{}{}", separator, w);
+            print!("{}{}", separator, word);
         }
-        first = false;
     }
     if verbose {
         print!(" ({:.1} bits of entropy)", (word_count as f32) * 12.9);
@@ -75,11 +75,9 @@ fn print_option1(rolls_words: Vec<&String>, word_count: u8, verbose: bool, separ
     println!();
 }
 
-fn print_option2(rolls_words: Vec<&String>, word_count: u8, verbose: bool, separator:&str, r1: u8, r2: u8, r3: u8, r4: u8) {
-    let mut first = true;
-    let mut i = 1;
-    for w in rolls_words.clone() {
-        if first {
+fn print_option2(rolls_words: Vec<&String>, word_count: u8, verbose: bool, separator: &str, r1: u8, r2: u8, r3: u8, r4: u8) {
+    for (i, word) in rolls_words.clone().iter().enumerate() {
+        if i == 0 {
             if verbose {
                 print!("Password option 2: ")
             }
@@ -87,14 +85,11 @@ fn print_option2(rolls_words: Vec<&String>, word_count: u8, verbose: bool, separ
             print!("{}", separator);
         }
 
-        if i == r1 {
-            print!("{}", replace_char(w, r2, r3, r4));
+        if i+1 == r1 as usize {
+            print!("{}", replace_char(word, r2, r3, r4));
         } else {
-            print!("{}", w)
+            print!("{}", word)
         }
-
-        first = false;
-        i = i + 1;
     }
     if verbose {
         print!(" ({:.1} bits of entropy)", (word_count as f32) * 12.9 + 10.0);
@@ -115,7 +110,9 @@ pub fn dice_it(word_count: u8, filename: &str, verbose: bool, replace: bool, sep
     let rolls = dice_strings(word_count);
 
     let words = read_words(filename, rolls.clone());
-    let rolls_words: Vec<&String> = rolls.iter().map(|r| words.get(r).unwrap()).collect();
+    let rolls_words: Vec<&String> = rolls.iter()
+        .map(|r| words.get(r).unwrap())
+        .collect();
 
     let r1 = rand::thread_rng().gen_range(1..=cmp::min(6, word_count)) as u8;
     let r1_word = rolls_words[(r1 - 1) as usize];
