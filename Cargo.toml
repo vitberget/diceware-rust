@@ -1,6 +1,6 @@
 [package]
 name = "diceware-rust"
-version = "0.3.2"
+version = "0.3.3"
 authors = ["Kenneth Hedman <github@vitberget.se>"]
 
 [dependencies]
