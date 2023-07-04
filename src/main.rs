@@ -8,6 +8,9 @@ mod diceit;
 /// Generates Diceware passwords
 #[derive(Parser, Debug)]
 #[command(author, version, about, long_about=None)]
+#[command(
+    help_template = "{about-section}\nVersion: {version} \nAuthor: {author-with-newline}\n{usage-heading} {usage}\n\n{all-args} {tab}"
+)]
 struct Args {
     #[arg(short, long, default_value_t = 5)]
     words: u8,
