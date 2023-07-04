@@ -5,4 +5,4 @@ authors = ["Kenneth Hedman <github@vitberget.se>"]
 
 [dependencies]
 rand = "0.8.5"
-clap = "3.2.22"
+clap = {version ="4.3.10", features = ["derive"]}

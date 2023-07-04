@@ -111,7 +111,7 @@ fn print_17_warning(rolls_words: Vec<&String>) {
     }
 }
 
-pub(crate) fn dice_it(word_count: u8, filename: &str, verbose: bool, replace: bool, separator: &str) {
+pub(crate) fn dice_it(word_count: u8, filename: &String, verbose: bool, replace: bool, separator: &String) {
     let rolls = dice_strings(word_count);
 
     let words = read_words(filename, rolls.clone());
