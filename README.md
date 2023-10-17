@@ -1,6 +1,6 @@
 # diceware-rust
 
-My first attempt at coding in Rust.
+My first project coding in Rust.
 
 Read more about [Diceware](http://world.std.com/%7Ereinhold/diceware.html).
 
@@ -9,8 +9,21 @@ Read more about [Diceware](http://world.std.com/%7Ereinhold/diceware.html).
 Install Rust & Cargo, I use Rustup.
 
 ```bash
-cargo install
+cargo build
 ```
+
+## Install
+
+```bash
+cargo install --path .
+```
+
+or
+
+```bash
+cargo install --git "https://github.com/vitberget/diceware-rust.git" 
+```
+
 
 ## Use
 
