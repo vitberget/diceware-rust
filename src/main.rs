@@ -2,6 +2,7 @@ extern crate clap;
 extern crate rand;
 
 use clap::Parser;
+use diceit::dice_it;
 
 mod diceit;
 
@@ -11,7 +12,7 @@ mod diceit;
 #[command(
     help_template = "{about-section}\nVersion: {version} \nAuthor: {author-with-newline}\n{usage-heading} {usage}\n\n{all-args} {tab}"
 )]
-struct Args {
+struct DiceItArgs {
     #[arg(short, long, default_value_t = 5)]
     words: u8,
 
@@ -29,13 +30,5 @@ struct Args {
 }
 
 fn main() {
-    let args = Args::parse();
-
-    diceit::dice_it(
-        args.words,
-        &args.list,
-        args.verbose,
-        args.replace,
-        &args.separator,
-    );
+    dice_it(&DiceItArgs::parse());
 }
