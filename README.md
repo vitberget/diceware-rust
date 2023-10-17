@@ -9,11 +9,7 @@ Read more about [Diceware](http://world.std.com/%7Ereinhold/diceware.html).
 Install Rust & Cargo, I use Rustup.
 
 ```bash
-# Build
-cargo build --release
-
-# "Install" to your path
-cp target/release/diceware-rust /where/ever/bin/
+cargo install
 ```
 
 ## Use

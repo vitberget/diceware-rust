@@ -53,7 +53,7 @@ fn print_rolls(rolls: Vec<String>, r1: u8, r2: u8, r3: u8, r4: u8) {
 }
 
 fn print_without_replace(rolls_words: &Vec<&String>, word_count: u8, verbose: bool, separator: &str) {
-    rolls_words.into_iter().enumerate().for_each(|(index,word)| {
+    rolls_words.into_iter().enumerate().for_each(|(index, word)| {
         if index == 0 {
             if verbose {
                 print!("Password with char replace   : ");
@@ -76,10 +76,10 @@ fn print_with_replace(
     word_count: u8,
     verbose: bool,
     separator: &str,
-    r1: u8,
-    r2: u8,
-    r3: u8,
-    r4: u8,
+    replace_word_roll: u8,
+    replace_char_roll: u8,
+    new_char_roll_1: u8,
+    new_char_roll_2: u8,
 ) {
     rolls_words
         .clone()
@@ -94,8 +94,8 @@ fn print_with_replace(
                 print!("{separator}");
             }
 
-            if index + 1 == r1 as usize {
-                print!("{}", replace_char(word, r2, r3, r4));
+            if index + 1 == replace_word_roll as usize {
+                print!("{}", replace_char(word, replace_char_roll, new_char_roll_1, new_char_roll_2));
             } else {
                 print!("{word}");
             }
@@ -129,15 +129,15 @@ pub(crate) fn dice_it(
     let word_map = read_words(filename, &rolls);
     let words: Vec<&String> = rolls.iter().map(|r| word_map.get(r).unwrap()).collect();
 
-    let r1 = rand::thread_rng().gen_range(1..=cmp::min(6, word_count)) as u8;
-    let r1_word = words[(r1 - 1) as usize];
+    let replace_word_roll = rand::thread_rng().gen_range(1..=cmp::min(6, word_count)) as u8;
+    let r1_word = words[(replace_word_roll - 1) as usize];
     let (_, r1_word_size_upper) = r1_word.chars().size_hint();
-    let r2 = rand::thread_rng().gen_range(1..=cmp::min(6, r1_word_size_upper.unwrap())) as u8;
-    let r3 = dice();
-    let r4 = dice();
+    let replace_char_roll = rand::thread_rng().gen_range(1..=cmp::min(6, r1_word_size_upper.unwrap())) as u8;
+    let new_char_roll_1 = dice();
+    let new_char_roll_2 = dice();
 
     if verbose {
-        print_rolls(rolls, r1, r2, r3, r4);
+        print_rolls(rolls, replace_word_roll, replace_char_roll, new_char_roll_1, new_char_roll_2);
     }
     if verbose || !replace {
         print_without_replace(&words, word_count, verbose, separator);
@@ -148,10 +148,10 @@ pub(crate) fn dice_it(
             word_count,
             verbose,
             separator,
-            r1,
-            r2,
-            r3,
-            r4,
+            replace_word_roll,
+            replace_char_roll,
+            new_char_roll_1,
+            new_char_roll_2,
         );
     }
     print_17_char_warning(&words);
