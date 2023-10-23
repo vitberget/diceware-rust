@@ -12,6 +12,12 @@ pub(crate) struct ReplaceRolls {
     pub(crate) new_char_2: u8,
 }
 
+impl ReplaceRolls {
+    fn replace_char_index(&self) -> usize {
+        ((self.new_char_1 - 1) * 6 + (self.new_char_2 - 1)) as usize
+    }
+}
+
 pub(crate) fn replace_char(the_word: &str, replace_rolls: &ReplaceRolls) -> String {
     the_word
         .chars()
@@ -20,7 +26,7 @@ pub(crate) fn replace_char(the_word: &str, replace_rolls: &ReplaceRolls) -> Stri
             if i + 1 == replace_rolls.char as usize {
                 REPLACE_CHARS
                     .chars()
-                    .nth(((replace_rolls.new_char_1 - 1) * 6 + (replace_rolls.new_char_2 - 1)) as usize)
+                    .nth(replace_rolls.replace_char_index())
                     .unwrap()
             } else {
                 c
