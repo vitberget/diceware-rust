@@ -3,7 +3,7 @@ use rand::Rng;
 use std::cmp::min;
 use super::dice::dice;
 
-static REPLACE_CHARS: &str = "~!#$%^&*()-=+[]\\{}:;\"'<>?/0123456789";
+const REPLACE_CHARS: &str = "~!#$%^&*()-=+[]\\{}:;\"'<>?/0123456789";
 
 pub(crate) struct ReplaceRolls {
     pub(crate) word: u8,
@@ -47,8 +47,9 @@ pub(crate) fn get_replace_rolls(words: &[String], args: &DiceItArgs) -> ReplaceR
         new_char_1: dice(), 
         new_char_2: dice() 
     };
+
     if args.verbose {
-        println!("Replace rolls    : {}{}{}{}",
+        println!("Replace rolls : {}{}{}{}",
                 rolls.word,
                 rolls.char,
                 rolls.new_char_1,
