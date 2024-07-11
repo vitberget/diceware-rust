@@ -55,5 +55,6 @@ pub(crate) fn get_replace_rolls(words: &[String], args: &DiceItArgs) -> ReplaceR
                 rolls.new_char_1,
                 rolls.new_char_2);
     };
+
     rolls
 }
