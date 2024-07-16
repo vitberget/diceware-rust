@@ -71,6 +71,6 @@ fn print_17_char_warning(rolls_words: &[String]) {
     let character_count: usize = rolls_words.iter().map(|w| w.len()).sum();
 
     if character_count < 17 {
-        println!("!!! Word characters {character_count} less than 17 !!!");
+        println!("!!! Word characters {character_count} is less than 17 !!!");
     }
 }
