@@ -15,13 +15,13 @@ cargo build
 ## Install
 
 ```bash
-cargo install --path .
+cargo install --git "https://github.com/vitberget/diceware-rust.git" 
 ```
 
 or
 
 ```bash
-cargo install --git "https://github.com/vitberget/diceware-rust.git" 
+cargo install --path .
 ```
 
 ## Use
