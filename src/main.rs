@@ -1,6 +1,3 @@
-extern crate clap;
-extern crate rand;
-
 use clap::Parser as _;
 
 use args::DiceItArgs;

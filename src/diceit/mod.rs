@@ -1,13 +1,10 @@
-extern crate rand;
-
 mod dice;
-mod replace_char;
 mod dictionary;
+mod replace_char;
 
 use crate::DiceItArgs;
-
-use self::dictionary::get_words;
-use self::replace_char::{replace_char, get_replace_rolls, ReplaceRolls};
+use crate::diceit::dictionary::get_words;
+use crate::diceit::replace_char::{ReplaceRolls, get_replace_rolls, replace_char};
 
 pub(crate) fn dice_it(args: &DiceItArgs) {
     let words = get_words(args);

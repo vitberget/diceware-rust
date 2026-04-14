@@ -2,8 +2,7 @@ use std::collections::HashMap;
 use std::fs;
 
 use crate::DiceItArgs;
-
-use super::dice::dice_strings;
+use crate::diceit::dice::dice_strings;
 
 static DICTIONARY_ENGLISH: &str = include_str!("../../resources/diceware-en.txt");
 static DICTIONARY_SWEDISH: &str = include_str!("../../resources/diceware-sv.txt");
