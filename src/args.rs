@@ -28,7 +28,7 @@ pub struct DiceItArgs {
     /// What to use as a separator between words
     pub separator: String,
 
-    #[arg(short, long)]
+    #[arg(long)]
     /// Print shell completion
     pub completion: Option<Shell>
 }
