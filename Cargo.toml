@@ -1,9 +1,10 @@
 [package]
 name = "diceware-rust"
-version = "0.3.6"
+version = "0.3.7"
 authors = ["Kenneth Hedman <github@vitberget.se>"]
 edition = "2024"
 
 [dependencies]
 rand = "0.10.1"
 clap = {version ="4.6", features = ["derive"]}
+clap_complete = "4.6.3"

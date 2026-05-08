@@ -7,5 +7,10 @@ mod diceit;
 mod args;
 
 fn main() {
-    dice_it(&DiceItArgs::parse());
+    let args = DiceItArgs::parse();
+
+    match args.completion {
+        Some(shell) => DiceItArgs::completion(shell),
+        None => dice_it(&args)
+    }
 }
